@@ -1,0 +1,6 @@
+{
+  "name": "Ateliera Interiors",
+  "description": "Luxury residential and commercial interior design studio platform showcasing bespoke portfolios, cinematic walkthroughs, 3D visualization, interactive budget estimation, and lead CRM.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
