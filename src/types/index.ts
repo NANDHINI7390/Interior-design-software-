@@ -61,6 +61,8 @@ export interface PackageItem {
   subtitle: string;
   tagline: string;
   recommendedFor: string;
+  startingPrice: string;
+  currencyNote?: string;
   features: string[];
   popular?: boolean;
 }

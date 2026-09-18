@@ -43,3 +43,50 @@
   scrollbar-width: none;
 }
 
+/* Cinematic continuous forward camera dolly for walkthrough */
+@keyframes cinematic-forward-dolly {
+  0% {
+    transform: scale(1.0) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.10) translate3d(0, -0.6%, 0);
+  }
+}
+
+@keyframes cinematic-threshold-pass {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(1.14) translate3d(0, -1.2%, 0);
+    filter: blur(1.5px);
+  }
+}
+
+@keyframes fadeInGentle {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-forward-dolly {
+  animation: cinematic-forward-dolly 8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform;
+}
+
+.animate-threshold-pass {
+  animation: cinematic-threshold-pass 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform, filter;
+}
+
+.animate-fadeInGentle {
+  animation: fadeInGentle 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+

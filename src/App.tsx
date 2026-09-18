@@ -2,21 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroVideoSlider } from './components/HeroVideoSlider';
 import { AboutStudio } from './components/AboutStudio';
-import { ServicesSection } from './components/ServicesSection';
 import { PortfolioSection } from './components/PortfolioSection';
-import { DesignStylesSection } from './components/DesignStylesSection';
+import { ServicesSection } from './components/ServicesSection';
 import { DesignProcessSection } from './components/DesignProcessSection';
-import { Visualization3DShowcase } from './components/Visualization3DShowcase';
-import { MaterialsShowcase } from './components/MaterialsShowcase';
 import { PackagesSection } from './components/PackagesSection';
-import { ProjectEstimator } from './components/ProjectEstimator';
-import { TestimonialsSection } from './components/TestimonialsSection';
+import { SmartProjectDossier } from './components/SmartProjectDossier';
 import { ConsultationSection } from './components/ConsultationSection';
+import { FinalCTA } from './components/FinalCTA';
 import { Footer } from './components/Footer';
 import { AdminDashboard } from './components/AdminDashboard';
 import { MOCK_LEADS, MOCK_CONSULTATIONS, MOCK_QUOTATIONS } from './data/mockData';
 import { LeadItem, ConsultationItem, QuotationItem } from './types';
-import { MessageSquare, Shield, Sparkles, Check } from 'lucide-react';
+import { Shield, Sparkles, Check } from 'lucide-react';
+import { WhatsAppIcon } from './components/icons/WhatsAppIcon';
 
 export default function App() {
   const [activeView, setActiveView] = useState<'client' | 'admin'>('client');
@@ -119,21 +117,47 @@ export default function App() {
     scrollToSection('contact-section');
   };
 
-  const handleTransferEstimate = (estimateData: {
-    propertyType: string;
-    area: number;
-    rooms: string;
-    budgetRange: string;
-    breakdownText: string;
+  const handleTransferDossier = (briefData: {
+    rawNotes: string;
+    projectTitle: string;
+    typology: string;
+    estimatedBudget: string;
+    timeline: string;
+    aestheticDirection: string;
+    materials: string[];
   }) => {
     setConsultationPrefill({
-      propertyType: estimateData.propertyType,
-      area: estimateData.area,
-      budgetRange: estimateData.budgetRange,
-      message: `Estimator Calculation: ${estimateData.breakdownText} (Indicative: ${estimateData.budgetRange})`,
+      propertyType: briefData.typology,
+      budgetRange: briefData.estimatedBudget,
+      message: `Architectural Brief Dossier:
+Project: ${briefData.projectTitle} (${briefData.typology})
+Aesthetic: ${briefData.aestheticDirection}
+Timeline: ${briefData.timeline}
+Materials: ${briefData.materials.join(', ')}
+
+Client Vision Notes:
+"${briefData.rawNotes}"`,
     });
     scrollToSection('contact-section');
-    showToast(`Calculated estimate (${estimateData.budgetRange}) transferred to consultation form.`);
+    showToast('Architectural Brief transferred directly into your consultation booking form.');
+  };
+
+  const handleTransferDossierToConsultation = (dossierData: {
+    propertyType: string;
+    area: number;
+    budgetRange: string;
+    style: string;
+    message: string;
+  }) => {
+    setConsultationPrefill({
+      propertyType: dossierData.propertyType,
+      area: dossierData.area,
+      budgetRange: dossierData.budgetRange,
+      style: dossierData.style,
+      message: dossierData.message,
+    });
+    scrollToSection('contact-section');
+    showToast('Architectural Brief transferred directly into your consultation booking form.');
   };
 
   const handleNewLeadSubmit = (leadData: Omit<LeadItem, 'id' | 'createdAt' | 'status'>) => {
@@ -205,73 +229,56 @@ export default function App() {
       {/* View Switcher: Client Experience vs Admin CRM */}
       {activeView === 'client' ? (
         <main id="client-experience-container">
-          {/* 1. Cinematic Video Hero Section */}
+          {/* 1. Cinematic Introduction */}
           <HeroVideoSlider
             onExploreProjects={() => scrollToSection('portfolio-section')}
             onBookConsultation={() => scrollToSection('contact-section')}
           />
 
-          {/* 2. About The Studio */}
+          {/* 2. Studio Story */}
           <AboutStudio
             onBookConsultation={() => scrollToSection('contact-section')}
           />
 
-          {/* 3. Services Grid */}
-          <ServicesSection
-            onEnquireService={handleEnquireService}
-          />
-
-          {/* 4 & 5. Projects Portfolio & Interactive Detail / Before-After Modal */}
+          {/* 3. Featured Projects */}
           <PortfolioSection
             onDiscussProject={handleDiscussProject}
           />
 
-          {/* 6. Design Styles */}
-          <DesignStylesSection
-            onSelectStyle={handleSelectStyle}
+          {/* 4. Services */}
+          <ServicesSection
+            onEnquireService={handleEnquireService}
           />
 
-          {/* 7. Design Process (6-Step Roadmap) */}
+          {/* 5. Design Process */}
           <DesignProcessSection
             onStartProcess={() => scrollToSection('contact-section')}
           />
 
-          {/* 8. 3D Visualization Showcase */}
-          <Visualization3DShowcase
-            onBookConsultation={() => scrollToSection('contact-section')}
-          />
-
-          {/* Tactile Materials & Finishes */}
-          <MaterialsShowcase
-            onRequestSwatchBox={() => {
-              setConsultationPrefill({
-                message: 'Requesting the curated Ateliera Material Swatch Box (Carrara Marble, Bavarian Smoked Oak, Linen textures).',
-              });
-              scrollToSection('contact-section');
-            }}
-          />
-
-          {/* 10. Service Packages */}
+          {/* 6. Design Packages */}
           <PackagesSection
             onRequestPackageQuote={handleRequestPackageQuote}
-            onOpenEstimator={() => scrollToSection('estimator-section')}
           />
 
-          {/* 11. Interactive Budget Estimator */}
-          <ProjectEstimator
-            onTransferToConsultation={handleTransferEstimate}
+          {/* 7. Inspiration / Copy & Paste Box */}
+          <SmartProjectDossier
+            onTransferBrief={handleTransferDossier}
+            onTransferToConsultation={handleTransferDossierToConsultation}
           />
 
-          {/* 9. Testimonials & Client Reviews */}
-          <TestimonialsSection />
-
-          {/* 12 & 13. Consultation Booking & Studio Contact */}
+          {/* 8. Consultation */}
           <ConsultationSection
             initialData={consultationPrefill}
             onSubmitLead={handleNewLeadSubmit}
           />
 
-          {/* 14. Footer */}
+          {/* 9. Final CTA */}
+          <FinalCTA
+            onBookConsultation={() => scrollToSection('contact-section')}
+            onExplorePortfolio={() => scrollToSection('portfolio-section')}
+          />
+
+          {/* 10. Footer */}
           <Footer
             onNavigate={scrollToSection}
             onOpenAdmin={() => {
@@ -296,20 +303,17 @@ export default function App() {
         />
       )}
 
-      {/* Floating WhatsApp Quick Action Button */}
+      {/* Floating Official WhatsApp Action Button - Only WhatsApp Symbol, No Dot, No Text */}
       <a
         href="https://wa.me/442079460912?text=Hello%20Ateliera%20Interiors%2C%20I%20would%20like%20to%20inquire%20about%20a%20turnkey%20interior%20project."
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 right-6 z-40 p-3.5 sm:p-4 rounded-full bg-[#1C1917] text-white border border-[#C5A880] shadow-2xl hover:scale-105 transition-all duration-300 flex items-center space-x-2.5 group"
-        title="Direct Studio WhatsApp Desk"
+        className="fixed bottom-6 right-6 z-40 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-[0_8px_30px_rgba(37,211,102,0.45)] hover:shadow-[0_12px_36px_rgba(37,211,102,0.65)] hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group cursor-pointer border border-white/20"
+        title="Chat on WhatsApp"
+        aria-label="Chat on WhatsApp"
         id="floating-whatsapp-btn"
       >
-        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-        <MessageSquare className="w-4 h-4 text-[#C5A880]" />
-        <span className="hidden sm:inline-block text-xs uppercase tracking-wider font-mono pr-1 text-[#FBF9F5]">
-          Studio WhatsApp
-        </span>
+        <WhatsAppIcon className="w-7 h-7 sm:w-8 sm:h-8 fill-white text-white group-hover:scale-110 transition-transform duration-300" />
       </a>
 
     </div>

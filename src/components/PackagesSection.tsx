@@ -4,12 +4,11 @@ import { Check, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 
 interface PackagesSectionProps {
   onRequestPackageQuote: (packageName: string) => void;
-  onOpenEstimator: () => void;
+  onOpenEstimator?: () => void;
 }
 
 export const PackagesSection: React.FC<PackagesSectionProps> = ({
   onRequestPackageQuote,
-  onOpenEstimator,
 }) => {
   return (
     <section id="packages-section" className="py-24 sm:py-32 bg-[#F5F2EC] border-b border-[#EBE6DD]">
@@ -53,7 +52,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({
 
                 <div className="space-y-6">
                   {/* Package Title & Subtitle */}
-                  <div className="space-y-2 border-b border-current/10 pb-6">
+                  <div className="space-y-3 border-b border-current/10 pb-6">
                     <div className="flex items-center justify-between">
                       <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-wide">
                         {pkg.name}
@@ -71,7 +70,25 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({
                     <p className={`text-xs uppercase tracking-wider ${isSignature ? 'text-[#C5A880]' : 'text-[#B89569]'}`}>
                       {pkg.subtitle}
                     </p>
-                    <p className={`text-xs leading-relaxed ${isSignature ? 'text-white/70' : 'text-[#78716C]'}`}>
+
+                    {/* Starting Investment Baseline */}
+                    <div className="pt-2">
+                      <div className="flex items-baseline space-x-2">
+                        <span className="text-3xl sm:text-4xl font-serif font-light tracking-tight text-[#C5A880]">
+                          {pkg.startingPrice}
+                        </span>
+                        <span className={`text-xs uppercase tracking-wider ${isSignature ? 'text-white/60' : 'text-[#78716C]'}`}>
+                          starts from
+                        </span>
+                      </div>
+                      {pkg.currencyNote && (
+                        <p className={`text-[11px] mt-1 ${isSignature ? 'text-white/60' : 'text-[#8C837A]'}`}>
+                          {pkg.currencyNote}
+                        </p>
+                      )}
+                    </div>
+
+                    <p className={`text-xs leading-relaxed pt-1 ${isSignature ? 'text-white/70' : 'text-[#78716C]'}`}>
                       {pkg.tagline}
                     </p>
                   </div>
@@ -112,17 +129,17 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({
                 <div className="pt-8 mt-8 border-t border-current/10 space-y-3">
                   <button
                     onClick={() => onRequestPackageQuote(pkg.name)}
-                    className={`w-full py-4 rounded-full font-medium text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center space-x-2 shadow-lg ${
+                    className={`w-full py-4 rounded-full font-medium text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center space-x-2 shadow-lg cursor-pointer ${
                       isSignature
                         ? 'bg-[#C5A880] hover:bg-[#B39060] text-[#1C1917]'
                         : 'bg-[#1C1917] hover:bg-[#2C2825] text-white'
                     }`}
                   >
-                    <span>Request a Quote</span>
+                    <span>Select Package</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   <p className={`text-[11px] text-center italic ${isSignature ? 'text-white/50' : 'text-[#A8A29E]'}`}>
-                    Custom itemized BOQ prepared upon consultation
+                    Itemized architectural BOQ drafted during consultation
                   </p>
                 </div>
 
@@ -131,18 +148,11 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({
           })}
         </div>
 
-        {/* Quick link to Estimator */}
-        <div className="mt-12 text-center p-6 bg-white rounded-2xl border border-[#EBE6DD] max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-left">
-            <div className="font-serif text-lg text-[#1C1917]">Need an immediate indicative budget?</div>
-            <div className="text-xs text-[#78716C]">Try our interactive project cost estimator based on your area and room preferences.</div>
-          </div>
-          <button
-            onClick={onOpenEstimator}
-            className="px-5 py-2.5 rounded-full bg-[#F5F2EC] hover:bg-[#EAE6DF] text-[#1C1917] text-xs uppercase tracking-wider font-medium whitespace-nowrap transition-colors"
-          >
-            Launch Budget Estimator
-          </button>
+        {/* Studio Assurance Note */}
+        <div className="mt-14 text-center max-w-2xl mx-auto">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#8C837A] font-mono">
+            Every engagement includes dedicated project directorship, weekly progress logs, and a 5-year studio craft warranty.
+          </p>
         </div>
 
       </div>

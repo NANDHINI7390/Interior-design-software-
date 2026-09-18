@@ -7,13 +7,13 @@ import {
   Phone,
   Mail,
   MapPin,
-  MessageSquare,
   Sparkles,
   ArrowRight,
   ShieldCheck,
   FileText,
   X,
 } from 'lucide-react';
+import { WhatsAppIcon } from './icons/WhatsAppIcon';
 import { LeadItem } from '../types';
 
 interface ConsultationSectionProps {
@@ -443,9 +443,9 @@ export const ConsultationSection: React.FC<ConsultationSectionProps> = ({
                   href="https://wa.me/442079460912?text=Hello%20Ateliera%20Interiors%2C%20I%20would%20like%20to%20inquire%20about%20a%20private%20interior%20project."
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs uppercase tracking-[0.2em] font-medium transition-colors flex items-center justify-center space-x-2 shadow"
+                  className="w-full py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs uppercase tracking-[0.2em] font-medium transition-all flex items-center justify-center space-x-2.5 shadow-[0_4px_16px_rgba(37,211,102,0.35)] hover:shadow-[0_6px_22px_rgba(37,211,102,0.5)] cursor-pointer"
                 >
-                  <MessageSquare className="w-4 h-4" />
+                  <WhatsAppIcon className="w-4 h-4 fill-white shrink-0" />
                   <span>Chat on WhatsApp Instantly</span>
                 </a>
               </div>

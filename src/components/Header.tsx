@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Calendar, Shield, Phone, MessageSquare, ArrowRight, Check } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Calendar,
+  Shield,
+  Phone,
+  ArrowRight,
+  Check,
+  Compass,
+  FileText,
+  Layers,
+  Sparkles,
+} from 'lucide-react';
+import { WhatsAppIcon } from './icons/WhatsAppIcon';
 
 interface HeaderProps {
   activeView: 'client' | 'admin';
@@ -68,106 +81,110 @@ export const Header: React.FC<HeaderProps> = ({
         id="main-header"
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#141210]/95 backdrop-blur-md text-[#FBF9F5] shadow-lg border-b border-[#2C2825] py-3.5'
-            : 'bg-gradient-to-b from-black/85 via-black/40 to-transparent text-white py-5'
+            ? 'bg-[#141210]/95 backdrop-blur-md text-[#FBF9F5] shadow-lg border-b border-[#2C2825] py-2.5 sm:py-3.5'
+            : 'bg-gradient-to-b from-black/85 via-black/40 to-transparent text-white py-3.5 sm:py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             
-            {/* Brand Identity */}
+            {/* Brand Identity - Responsive font sizing with luxury diamond symbol instead of dot */}
             <div
               onClick={() => {
                 if (activeView === 'admin') onViewChange('client');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="cursor-pointer group flex flex-col select-none"
+              className="cursor-pointer group flex flex-col select-none min-w-0 shrink"
               id="brand-logo"
             >
-              <div className="flex items-center space-x-2">
-                <span className="font-serif text-2xl sm:text-3xl tracking-[0.22em] font-light text-[#FBF9F5] group-hover:text-[#C5A880] transition-colors">
-                  ATELIERA
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <span className="font-serif text-sm min-[360px]:text-base sm:text-xl lg:text-2xl xl:text-3xl tracking-[0.08em] min-[360px]:tracking-[0.12em] sm:tracking-[0.18em] font-light text-[#FBF9F5] group-hover:text-[#C5A880] transition-colors whitespace-nowrap">
+                  ATELIERA INTERIORS
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]" />
+                {/* Refined architectural diamond symbol replacing the previous dot */}
+                <span className="text-[#C5A880] text-[9px] sm:text-xs select-none shrink-0 leading-none">
+                  ◆
+                </span>
               </div>
-              <span className="text-[9px] uppercase tracking-[0.32em] text-white/60 font-sans mt-0.5">
-                Interior Architecture
-              </span>
             </div>
 
-            {/* Desktop Navigation - Concise, Elegant, Spaced */}
-            <nav className="hidden lg:flex items-center space-x-8 text-xs tracking-[0.2em] uppercase font-sans">
+            {/* Desktop Navigation - Responsive spacing across laptop & desktop screens */}
+            <nav className="hidden xl:flex items-center space-x-6 2xl:space-x-8 text-xs tracking-[0.18em] uppercase font-sans shrink-0">
+              <button
+                onClick={() => {
+                  if (activeView === 'admin') onViewChange('client');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="text-white/80 hover:text-[#C5A880] transition-colors py-1 cursor-pointer"
+                id="nav-home"
+              >
+                Home
+              </button>
               <button
                 onClick={() => scrollToSection('portfolio-section')}
-                className="text-white/80 hover:text-[#C5A880] transition-colors py-1"
+                className="text-white/80 hover:text-[#C5A880] transition-colors py-1 cursor-pointer"
                 id="nav-portfolio"
               >
                 Projects
               </button>
               <button
                 onClick={() => scrollToSection('services-section')}
-                className="text-white/80 hover:text-[#C5A880] transition-colors py-1"
+                className="text-white/80 hover:text-[#C5A880] transition-colors py-1 cursor-pointer"
                 id="nav-services"
               >
                 Services
               </button>
               <button
-                onClick={() => scrollToSection('styles-section')}
-                className="text-white/80 hover:text-[#C5A880] transition-colors py-1"
-                id="nav-styles"
+                onClick={() => scrollToSection('about-section')}
+                className="text-white/80 hover:text-[#C5A880] transition-colors py-1 cursor-pointer"
+                id="nav-about"
               >
-                Styles
+                About
               </button>
               <button
                 onClick={() => scrollToSection('process-section')}
-                className="text-white/80 hover:text-[#C5A880] transition-colors py-1"
+                className="text-white/80 hover:text-[#C5A880] transition-colors py-1 cursor-pointer"
                 id="nav-process"
               >
                 Process
               </button>
               <button
-                onClick={() => scrollToSection('3d-visualization-section')}
-                className="text-white/80 hover:text-[#C5A880] transition-colors py-1"
-                id="nav-3d"
+                onClick={() => scrollToSection('contact-section')}
+                className="text-white/80 hover:text-[#C5A880] transition-colors py-1 cursor-pointer"
+                id="nav-contact"
               >
-                3D Studio
-              </button>
-              <button
-                onClick={() => scrollToSection('estimator-section')}
-                className="text-[#C5A880] hover:text-[#e4cdab] transition-colors font-medium py-1"
-                id="nav-estimator"
-              >
-                Estimator
+                Contact
               </button>
             </nav>
 
-            {/* Right CTAs & Menu Trigger */}
-            <div className="flex items-center space-x-3 sm:space-x-4">
+            {/* Right CTAs - Fully responsive on mobile, tablet & desktop */}
+            <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
               
-              {/* Consultation CTA Button */}
+              {/* Consultation CTA Button - Renamed to 'Book a Consultation' with responsive sizing */}
               <button
                 onClick={onBookConsultation}
-                className="inline-flex items-center space-x-2 px-4 sm:px-5 py-2.5 rounded-full bg-[#C5A880] hover:bg-[#b89569] text-[#1C1917] font-medium text-xs tracking-[0.16em] uppercase transition-all duration-300 shadow-md hover:shadow-lg"
+                className="inline-flex items-center space-x-1 sm:space-x-2 px-2.5 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-full bg-[#C5A880] hover:bg-[#D4BC96] text-[#1C1917] font-medium text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer shrink-0"
                 id="header-cta-book"
+                title="Book a Consultation"
               >
-                <Calendar className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Book Consultation</span>
-                <span className="sm:hidden">Consult</span>
+                <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                <span className="hidden sm:inline whitespace-nowrap">Book a Consultation</span>
+                <span className="sm:hidden whitespace-nowrap">Book</span>
               </button>
 
               {/* Hamburger / Menu Trigger (Clean & Responsive) */}
               <button
                 onClick={() => setMenuOpen(true)}
-                className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40 transition-all flex items-center space-x-2"
+                className="p-1.5 sm:p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40 transition-all flex items-center space-x-1.5 cursor-pointer shrink-0"
                 aria-label="Open Studio Menu"
                 id="header-menu-toggle"
               >
-                <Menu className="w-4 h-4" />
+                <Menu className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                 <span className="hidden md:inline text-[11px] uppercase tracking-wider font-sans pr-1">
                   Menu
                 </span>
                 {leadsCount > 0 && (
-                  <span className="w-2 h-2 rounded-full bg-[#C5A880] animate-pulse" />
+                  <Sparkles className="w-3 h-3 text-[#C5A880] animate-pulse shrink-0" />
                 )}
               </button>
 
@@ -202,15 +219,15 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={() => setMenuOpen(false)}
-                className="p-2 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-white transition-colors"
+                className="p-2 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-white transition-colors cursor-pointer"
                 aria-label="Close menu"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* CRM & Client Demo Switcher (Positioned inside the Menu Bar / Hamburger Menu as requested) */}
-            <div className="my-6 p-4 rounded-2xl bg-[#221F1C] border border-[#C5A880]/30 shadow-inner">
+            {/* CRM & Client Demo Switcher */}
+            <div className="my-5 p-4 rounded-2xl bg-[#221F1C] border border-[#C5A880]/30 shadow-inner">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
                   <Shield className="w-4 h-4 text-[#C5A880]" />
@@ -235,7 +252,7 @@ export const Header: React.FC<HeaderProps> = ({
                     onViewChange('client');
                     setMenuOpen(false);
                   }}
-                  className={`py-2 px-3 rounded-lg text-xs font-medium uppercase tracking-wider transition-all text-center flex items-center justify-center space-x-1.5 ${
+                  className={`py-2 px-3 rounded-lg text-xs font-medium uppercase tracking-wider transition-all text-center flex items-center justify-center space-x-1.5 cursor-pointer ${
                     activeView === 'client'
                       ? 'bg-[#C5A880] text-[#1C1917] font-semibold shadow'
                       : 'text-white/60 hover:text-white'
@@ -251,7 +268,7 @@ export const Header: React.FC<HeaderProps> = ({
                     onViewChange('admin');
                     setMenuOpen(false);
                   }}
-                  className={`py-2 px-3 rounded-lg text-xs font-medium uppercase tracking-wider transition-all text-center flex items-center justify-center space-x-1.5 ${
+                  className={`py-2 px-3 rounded-lg text-xs font-medium uppercase tracking-wider transition-all text-center flex items-center justify-center space-x-1.5 cursor-pointer ${
                     activeView === 'admin'
                       ? 'bg-[#C5A880] text-[#1C1917] font-semibold shadow'
                       : 'text-white/60 hover:text-white'
@@ -265,76 +282,72 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Quick Navigation Links */}
-            <div className="space-y-1 text-sm uppercase tracking-[0.18em] font-sans flex-1">
+            <div className="space-y-1.5 text-xs uppercase tracking-[0.2em] font-sans flex-1">
+              <button
+                onClick={() => {
+                  if (activeView === 'admin') onViewChange('client');
+                  setMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/5 text-white/90 transition-colors flex items-center justify-between cursor-pointer"
+              >
+                <span>Home</span>
+                <ArrowRight className="w-3.5 h-3.5 opacity-40" />
+              </button>
               <button
                 onClick={() => scrollToSection('portfolio-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
+                className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/5 text-white/90 transition-colors flex items-center justify-between cursor-pointer"
               >
-                <span>Curated Projects</span>
+                <span>Projects</span>
                 <ArrowRight className="w-3.5 h-3.5 opacity-40" />
               </button>
               <button
                 onClick={() => scrollToSection('services-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
+                className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/5 text-white/90 transition-colors flex items-center justify-between cursor-pointer"
               >
-                <span>Services &amp; Offerings</span>
+                <span>Services</span>
                 <ArrowRight className="w-3.5 h-3.5 opacity-40" />
               </button>
               <button
-                onClick={() => scrollToSection('styles-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
+                onClick={() => scrollToSection('about-section')}
+                className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/5 text-white/90 transition-colors flex items-center justify-between cursor-pointer"
               >
-                <span>Design Styles</span>
+                <span>About</span>
                 <ArrowRight className="w-3.5 h-3.5 opacity-40" />
               </button>
               <button
                 onClick={() => scrollToSection('process-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
+                className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/5 text-white/90 transition-colors flex items-center justify-between cursor-pointer"
               >
-                <span>The 6-Step Roadmap</span>
-                <ArrowRight className="w-3.5 h-3.5 opacity-40" />
-              </button>
-              <button
-                onClick={() => scrollToSection('3d-visualization-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 text-[#C5A880] transition-colors flex items-center justify-between"
-              >
-                <span>3D Virtual Studio</span>
-                <ArrowRight className="w-3.5 h-3.5 opacity-40" />
-              </button>
-              <button
-                onClick={() => scrollToSection('materials-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
-              >
-                <span>Materials &amp; Finishes</span>
-                <ArrowRight className="w-3.5 h-3.5 opacity-40" />
-              </button>
-              <button
-                onClick={() => scrollToSection('packages-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
-              >
-                <span>Atelier Packages</span>
-                <ArrowRight className="w-3.5 h-3.5 opacity-40" />
-              </button>
-              <button
-                onClick={() => scrollToSection('estimator-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 text-[#C5A880] transition-colors flex items-center justify-between"
-              >
-                <span>Budget Estimator</span>
+                <span>Process</span>
                 <ArrowRight className="w-3.5 h-3.5 opacity-40" />
               </button>
               <button
                 onClick={() => scrollToSection('contact-section')}
-                className="w-full text-left py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-[#C5A880] transition-colors flex items-center justify-between"
+                className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/5 text-white/90 transition-colors flex items-center justify-between cursor-pointer"
               >
-                <span>Private Consultation</span>
+                <span>Contact</span>
                 <ArrowRight className="w-3.5 h-3.5 opacity-40" />
+              </button>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  onBookConsultation();
+                }}
+                className="w-full text-left py-3 px-3 rounded-lg bg-[#C5A880]/20 text-[#C5A880] font-semibold transition-colors flex items-center justify-between cursor-pointer mt-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Book a Consultation</span>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
             {/* Studio Contact & Concierge Information */}
-            <div className="pt-6 border-t border-white/10 space-y-4">
+            <div className="pt-5 border-t border-white/10 space-y-3">
               <div className="text-xs text-white/60 space-y-1 font-light">
-                <div className="text-white/80 font-medium tracking-wider uppercase text-[11px] text-[#C5A880]">
+                <div className="text-white/80 font-medium tracking-wider uppercase text-[10px] text-[#C5A880]">
                   Global Design Studios
                 </div>
                 <div>London • Dubai • New York • Milan</div>
@@ -352,9 +365,9 @@ export const Header: React.FC<HeaderProps> = ({
                   href="https://wa.me/442079460912?text=Hello%20Ateliera%20Interiors%2C%20I%20would%20like%20to%20inquire%20about%20a%20turnkey%20interior%20project."
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 py-2.5 px-3 rounded-full border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 text-xs tracking-wider uppercase flex items-center justify-center space-x-2 transition-colors"
+                  className="flex-1 py-2.5 px-3 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs tracking-wider uppercase font-medium flex items-center justify-center space-x-2 transition-all shadow-md"
                 >
-                  <MessageSquare className="w-3.5 h-3.5" />
+                  <WhatsAppIcon className="w-4 h-4 fill-white" />
                   <span>WhatsApp</span>
                 </a>
               </div>
@@ -366,3 +379,4 @@ export const Header: React.FC<HeaderProps> = ({
     </>
   );
 };
+
